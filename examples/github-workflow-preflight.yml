@@ -1,0 +1,32 @@
+# Compatibility preflight. Run this before installing the gate itself: it reports whether this repository is
+# SUPPORTED, SUPPORTED WITH WARNINGS or UNSUPPORTED, runs no tests, and never fails the job.
+#
+# `mode: doctor` is refused on pull_request/merge_group, where it would turn the gate into a no-op.
+name: Merge Integrity preflight
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      # The preflight checks that the test runner is installed, so install dependencies first.
+      - run: npm ci
+
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+        with:
+          mode: doctor

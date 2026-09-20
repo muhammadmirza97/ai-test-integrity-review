@@ -1,0 +1,100 @@
+name: Incorrect finding (false BLOCK or wrong WARN)
+description: A finding you believe is wrong. Highest priority for this alpha.
+title: "[finding] "
+labels: ["alpha", "incorrect-finding"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **A false BLOCK is the most serious defect this product can have. Thank you for reporting it.**
+
+        ⚠️ **Do not paste secrets, tokens, credentials, private source code, or proprietary logs.**
+        A few redacted lines around the finding are enough. Everything in this issue is public forever.
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: What did the check report?
+      options: ["BLOCK", "WARN", "ERROR", "PASS (it should not have)"]
+    validations:
+      required: true
+
+  - type: input
+    id: rules
+    attributes:
+      label: Rule ID(s)
+      description: For example MI004_ASSERTION_WEAKENED. Shown in the annotation and the Step Summary.
+      placeholder: MI004_ASSERTION_WEAKENED
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-wrong
+    attributes:
+      label: Why is the finding wrong?
+      description: What was the change really doing?
+    validations:
+      required: true
+
+  - type: textarea
+    id: snippet
+    attributes:
+      label: Minimal before/after snippet (redacted)
+      description: The smallest example that reproduces it. Rename identifiers if needed.
+      render: diff
+    validations:
+      required: false
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Test framework
+      options: ["Jest", "Vitest", "Other / not sure"]
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Framework version and Node version
+      placeholder: "jest 30.2.0, Node 24"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: package-manager
+    attributes:
+      label: Package manager
+      options: ["npm", "pnpm", "Yarn (node-modules)", "Yarn (Plug'n'Play)", "Other / not sure"]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: enforced
+    attributes:
+      label: Was the check required (blocking merges) when this happened?
+      options: ["Yes, required", "No, advisory only", "Not sure"]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: What did this cost you?
+      options:
+        - "Nothing, I noticed it and moved on"
+        - "A few minutes of confusion"
+        - "I had to work around it (ignore entry, policy change, admin merge)"
+        - "It blocked a real merge and wasted real time"
+        - "It made me consider removing the check"
+    validations:
+      required: true
+
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Preflight output (optional)
+      description: "Output of `merge-integrity doctor`, or the Action run with `mode: doctor`. Redact anything sensitive."
+      render: text
+    validations:
+      required: false

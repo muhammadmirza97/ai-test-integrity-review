@@ -1,0 +1,7 @@
+{
+  "ext": "ts",
+  "polarity": "positive",
+  "expect": {
+    "MI004_ASSERTION_WEAKENED": 1
+  }
+}

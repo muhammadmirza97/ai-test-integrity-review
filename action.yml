@@ -1,0 +1,61 @@
+name: "AI Test Integrity Review"
+description: "Independent test-integrity review for AI-generated pull requests: blocks high-confidence test tampering (Jest/Vitest)."
+author: "AI Test Integrity Review"
+branding:
+  icon: "shield"
+  color: "blue"
+
+# On pull_request and merge_group runs the workflow file is controlled by the pull request under review, so inputs
+# cannot weaken the decision: base/head refs always come from the event, all settings come from the base-branch
+# .merge-integrity.yml, and any weakening input makes the run ERROR. Leave inputs empty unless running manually.
+inputs:
+  mode:
+    description: "'check' (default) analyses the pull request. 'doctor' runs the compatibility preflight, never fails the job, and is rejected on pull_request/merge_group."
+    required: false
+    default: "check"
+  working-directory:
+    description: "Manual runs only. Project directory relative to the repository root (default: policy workingDirectory)."
+    required: false
+    default: ""
+  config:
+    description: "Manual runs only. Policy file path (default: .merge-integrity.yml)."
+    required: false
+    default: ""
+  config-source:
+    description: "Manual runs only: 'base' or 'head'. Protected runs always use 'base'."
+    required: false
+    default: ""
+  framework:
+    description: "Manual runs only: auto, jest or vitest (default: policy framework)."
+    required: false
+    default: ""
+  mutation:
+    description: "'true' enables mutation testing for this run (stricter). 'false' is rejected on protected runs. Default: policy."
+    required: false
+    default: ""
+  red-green:
+    description: "Manual runs only: 'false' skips red/green verification. Rejected on protected runs. Default: policy."
+    required: false
+    default: ""
+  base-ref:
+    description: "Manual runs only (e.g. workflow_dispatch). Rejected on pull_request/merge_group."
+    required: false
+    default: ""
+  head-ref:
+    description: "Manual runs only. Rejected on pull_request/merge_group."
+    required: false
+    default: ""
+
+outputs:
+  status:
+    description: "check mode: pass, warn, block or error. doctor mode: supported, supported-with-warnings or unsupported. Informational; rely on the job status for enforcement."
+  blocker-count:
+    description: "Number of blocking findings (doctor mode: failed preflight checks)"
+  warning-count:
+    description: "Number of warning findings (doctor mode: advisory preflight checks)"
+  report-path:
+    description: "Path of the JSON report on the runner"
+
+runs:
+  using: "node24"
+  main: "packages/action/dist/index.cjs"

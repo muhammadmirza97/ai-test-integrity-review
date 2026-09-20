@@ -1,0 +1,67 @@
+name: Useful finding (it worked)
+description: It caught something real, or the evidence helped a review.
+title: "[useful] "
+labels: ["alpha", "useful-finding"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the most valuable feedback we can get: it is the only evidence that the product is worth
+        continuing.
+
+        ⚠️ **Do not paste secrets, tokens, credentials, private source code, or proprietary logs.**
+        A short description is enough; a redacted snippet is a bonus. Everything here is public forever.
+
+  - type: dropdown
+    id: what
+    attributes:
+      label: What was useful?
+      options:
+        - "A BLOCK caught a real problem (a test was weakened/skipped/bypassed)"
+        - "A WARN made me look at something I would have missed"
+        - "Red/green evidence showed a regression test really fails on the old code"
+        - "Red/green showed a 'regression test' that did not actually catch the bug"
+        - "A mutation survivor pointed at a gap"
+        - "Something else"
+    validations:
+      required: true
+
+  - type: input
+    id: rules
+    attributes:
+      label: Rule ID(s), if any
+      placeholder: MI001_TEST_SKIPPED
+    validations:
+      required: false
+
+  - type: textarea
+    id: story
+    attributes:
+      label: What happened, and what did you do about it?
+      description: Did the pull request change as a result?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: authorship
+    attributes:
+      label: Was the pull request written with an AI coding agent?
+      options: ["Yes", "No", "Partly", "Prefer not to say"]
+    validations:
+      required: false
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Test framework
+      options: ["Jest", "Vitest", "Other / not sure"]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: keep
+    attributes:
+      label: Will you keep it enabled?
+      options: ["Yes, as a required check", "Yes, advisory only", "Undecided", "No"]
+    validations:
+      required: true

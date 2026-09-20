@@ -1,0 +1,36 @@
+name: Merge Integrity
+
+on:
+  # Unprivileged PR context only. Never use pull_request_target: it would run untrusted PR code with a privileged token.
+  pull_request:
+  merge_group:
+
+permissions:
+  contents: read
+
+jobs:
+  merge-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Full history is required to resolve the base revision and create base/head worktrees.
+          fetch-depth: 0
+          # Do not leave the job token in .git/config where the PR's tests could read it.
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      # Install the project's own dependencies (including Jest/Vitest and, for mutation testing,
+      # @stryker-mutator/core plus @stryker-mutator/jest-runner or @stryker-mutator/vitest-runner).
+      - run: npm ci
+
+      # No inputs: on pull_request/merge_group all settings come from .merge-integrity.yml on the base branch,
+      # and inputs that would weaken the check make the run fail with ERROR.
+      # Pin to an exact commit SHA for anything you enforce; the tag below is the alpha release.
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+

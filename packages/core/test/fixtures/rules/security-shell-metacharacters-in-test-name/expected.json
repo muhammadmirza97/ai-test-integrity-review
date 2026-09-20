@@ -1,0 +1,7 @@
+{
+  "polarity": "positive",
+  "ext": "js",
+  "expect": {
+    "MI002_TEST_FOCUSED": 1
+  }
+}

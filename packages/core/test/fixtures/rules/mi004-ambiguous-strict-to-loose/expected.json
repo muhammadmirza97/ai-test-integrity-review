@@ -1,0 +1,7 @@
+{
+  "ext": "ts",
+  "polarity": "ambiguous",
+  "expect": {
+    "MI101_ASSERTION_CHANGE_AMBIGUOUS": 1
+  }
+}

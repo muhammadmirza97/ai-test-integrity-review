@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Is my repository supported?
+    url: https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/docs/ALPHA_SUPPORT_MATRIX.md
+    about: The alpha support matrix lists what works, what is limited and what is not supported yet. Run the preflight (doctor) first.
+  - name: Troubleshooting by symptom
+    url: https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/docs/TROUBLESHOOTING.md
+    about: ERROR, MI103, MI107, timeouts, snapshots, permissions, and how to turn the check off.
+  - name: Report a security vulnerability (private)
+    url: https://github.com/muhammadmirza97/ai-test-integrity-review/security/advisories/new
+    about: Never report security problems in a public issue.

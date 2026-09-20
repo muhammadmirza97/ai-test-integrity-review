@@ -1,0 +1,107 @@
+name: Alpha feedback
+description: Anything else — noise, speed, wording, what would make you uninstall it.
+title: "[feedback] "
+labels: ["alpha", "feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Short answers are fine. Skip anything you do not want to answer.
+
+        ⚠️ **Do not paste secrets, tokens, credentials, private source code, or proprietary logs.**
+        Everything in this issue is public forever.
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Where are you with it?
+      options:
+        - "I ran the preflight but did not install it"
+        - "Installed, no pull requests yet"
+        - "Installed, running on real pull requests (advisory)"
+        - "Required status check"
+        - "I removed it"
+    validations:
+      required: true
+
+  - type: input
+    id: setup
+    attributes:
+      label: Framework, package manager, Node version
+      placeholder: "vitest 4, pnpm, Node 24"
+    validations:
+      required: false
+
+  - type: input
+    id: prs
+    attributes:
+      label: Roughly how many pull requests has it run on?
+      placeholder: "about 15"
+    validations:
+      required: false
+
+  - type: textarea
+    id: results
+    attributes:
+      label: Roughly how did those runs come out?
+      description: "For example: 10 PASS, 4 WARN, 0 BLOCK, 1 ERROR."
+      placeholder: "PASS: , WARN: , BLOCK: , ERROR: "
+    validations:
+      required: false
+
+  - type: dropdown
+    id: keep
+    attributes:
+      label: Would you keep it enabled as it is today?
+      options:
+        - "Yes, as a required check"
+        - "Yes, advisory only"
+        - "Only if the noise dropped"
+        - "No"
+        - "Undecided"
+    validations:
+      required: true
+
+  - type: textarea
+    id: annoyance
+    attributes:
+      label: Biggest annoyance
+    validations:
+      required: false
+
+  - type: textarea
+    id: uninstall
+    attributes:
+      label: What would make you remove it?
+    validations:
+      required: false
+
+  - type: textarea
+    id: missing
+    attributes:
+      label: What would make it clearly worth keeping?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: willingness-to-pay
+    attributes:
+      label: "Optional: if this were a paid tool for private repositories, what would be reasonable?"
+      description: Neutral question for planning only. Nothing is for sale, and your answer changes nothing about your access.
+      options:
+        - "Prefer not to answer"
+        - "Only if it stays free"
+        - "I would pay something, but I do not know how much"
+        - "Up to about $10 per month"
+        - "About $10-30 per month"
+        - "More than $30 per month"
+        - "Only my employer would pay for something like this"
+    validations:
+      required: false
+
+  - type: textarea
+    id: anything
+    attributes:
+      label: Anything else
+    validations:
+      required: false

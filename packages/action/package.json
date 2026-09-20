@@ -1,0 +1,9 @@
+{
+  "name": "@merge-integrity/action",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@merge-integrity/core": "workspace:*"
+  }
+}

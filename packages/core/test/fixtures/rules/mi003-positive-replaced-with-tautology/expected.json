@@ -1,0 +1,7 @@
+{
+  "polarity": "positive",
+  "ext": "ts",
+  "expect": {
+    "MI003_ASSERTION_REMOVED": 1
+  }
+}

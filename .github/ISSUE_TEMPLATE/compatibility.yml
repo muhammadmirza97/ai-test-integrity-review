@@ -1,0 +1,99 @@
+name: Compatibility / ERROR
+description: The check ERRORs, or cannot analyse your repository.
+title: "[compat] "
+labels: ["alpha", "compatibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please run the preflight first — it detects most known incompatibilities:
+        `merge-integrity doctor`, or the Action with `mode: doctor`.
+        Check [the support matrix](https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/docs/ALPHA_SUPPORT_MATRIX.md): if your setup is listed as
+        NOT CURRENTLY SUPPORTED, an issue is still useful — it tells us which gap to close first.
+
+        ⚠️ **Do not paste secrets, tokens, credentials, private source code, or proprietary logs.**
+        Redact paths and identifiers you do not want public. Everything in this issue is public forever.
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: What happened?
+      options:
+        - "ERROR on every pull request"
+        - "ERROR on some pull requests"
+        - "The preflight says UNSUPPORTED"
+        - "It runs, but every pull request gets the same warning (MI103 / MI107)"
+        - "Something else"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: The "Reason" line from the log or Step Summary
+      description: One or two lines is enough. Redact anything sensitive.
+      render: text
+    validations:
+      required: true
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Test framework
+      options: ["Jest", "Vitest", "Other / not sure"]
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Framework version, Node version, runner OS
+      placeholder: "vitest 4.1.0, Node 24, ubuntu-latest"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: package-manager
+    attributes:
+      label: Package manager
+      options: ["npm", "pnpm", "Yarn (node-modules)", "Yarn (Plug'n'Play)", "Other / not sure"]
+    validations:
+      required: true
+
+  - type: input
+    id: test-script
+    attributes:
+      label: Your package.json "test" script
+      description: The gate runs the test runner directly, so this is often the cause.
+      placeholder: "jest --config ./config/jest.config.js"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: setup
+    attributes:
+      label: Does any of this apply?
+      options:
+        - label: Monorepo / workspaces
+        - label: Tests need a build step or generated files
+        - label: Tests need environment variables set by CI
+        - label: Tests need a database or other service
+        - label: Vitest browser mode, or Jest projects/testRegex
+        - label: Custom test runner or wrapper script
+
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Preflight output
+      description: Output of `merge-integrity doctor` (or `--format json`). Redact anything sensitive.
+      render: text
+    validations:
+      required: false
+
+  - type: dropdown
+    id: keep
+    attributes:
+      label: Given this, will you keep it installed?
+      options: ["Yes", "Yes, but not as a required check", "No, I removed it", "Not decided"]
+    validations:
+      required: true

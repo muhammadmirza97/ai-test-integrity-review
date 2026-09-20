@@ -1,0 +1,11 @@
+{
+  "name": "unsupported-basic-fixture",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "11.0.0"
+  }
+}

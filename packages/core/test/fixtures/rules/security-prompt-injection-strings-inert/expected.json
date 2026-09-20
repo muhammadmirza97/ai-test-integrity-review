@@ -1,0 +1,7 @@
+{
+  "polarity": "positive",
+  "ext": "ts",
+  "expect": {
+    "MI001_TEST_SKIPPED": 1
+  }
+}

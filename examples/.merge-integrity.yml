@@ -1,0 +1,47 @@
+# Optional. Every key is optional except `version`; the built-in defaults apply without this file.
+# In protected CI (pull_request / merge_group) only the copy on the BASE branch is used, and a pull request
+# that weakens it is reported as MI106.
+version: 1
+
+# The project directory to analyse, relative to the repository root. Use this in a monorepo.
+workingDirectory: "."
+
+# auto | jest | vitest. Set it explicitly if both are present.
+framework: auto
+
+policy:
+  # true makes every advisory warning fail the check as well. Start with false.
+  warningsBlockMerge: false
+
+redGreen:
+  enabled: true
+  # Total budget for running the changed tests against the base implementation.
+  timeoutSeconds: 120
+
+mutation:
+  # Opt-in. Requires @stryker-mutator/core@10 and the matching runner in the project,
+  # with Jest 27-30 or Vitest 2-4. Leaving it enabled without them makes every run ERROR.
+  enabled: false
+  timeoutSeconds: 180
+  maxMutants: 25
+
+# Names (not values) of environment variables the project's tests may see. Everything else is withheld.
+# Use this when your tests need, for example, TZ or a test database URL provided by the workflow.
+testEnvironment:
+  passthrough: []
+
+# Severities. The defaults are calibrated: only high-confidence tampering blocks
+# (MI001, MI002, MI004, MI005, MI106); everything else is an advisory warning.
+# Uncomment a line to be stricter than the default. Do not lower a severity here to silence a finding you
+# disagree with - report it instead (SUPPORT.md).
+rules: {}
+  # MI003_ASSERTION_REMOVED: block
+  # MI006_REGRESSION_TEST_NON_DISCRIMINATING: block
+  # MI107_TEST_DISCOVERY_UNSUPPORTED: block
+
+# Scoped exceptions. Every entry needs a rule, a path glob that is not "**", and a reason.
+# Ignored findings stay visible in the report.
+ignore: []
+  # - rule: MI104_TEST_DELETED
+  #   path: "tests/legacy/**"
+  #   reason: "Legacy suite is being retired under a tracked migration."

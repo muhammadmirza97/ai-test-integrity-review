@@ -1,0 +1,6 @@
+{
+  "polarity": "error",
+  "ext": "ts",
+  "expectError": true,
+  "expect": {}
+}

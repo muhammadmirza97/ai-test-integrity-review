@@ -1,0 +1,3 @@
+* text=auto eol=lf
+packages/action/dist/** linguist-generated=true -diff
+*.snap text eol=lf

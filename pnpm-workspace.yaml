@@ -1,0 +1,6 @@
+packages:
+  - "packages/*"
+# Dependency install scripts are denied by default (supply-chain hardening).
+# esbuild ships its platform binary through optional dependencies and works without its postinstall.
+allowBuilds:
+  esbuild: false

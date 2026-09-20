@@ -1,0 +1,32 @@
+{
+  "name": "ai-test-integrity-review",
+  "private": true,
+  "version": "0.1.0-alpha.1",
+  "description": "Independent test-integrity review for AI-generated pull requests (Jest/Vitest, local-first).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "packageManager": "pnpm@12.4.2",
+  "engines": {
+    "node": "^22.18.0 || >=24.11.0"
+  },
+  "scripts": {
+    "build": "tsc -b packages/core packages/cli packages/action",
+    "typecheck": "tsc -b packages/core packages/cli packages/action && tsc -p tsconfig.test.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:integration": "vitest run --project integration",
+    "bundle": "node packages/action/build.mjs",
+    "fixtures:install": "node scripts/install-fixtures.mjs",
+    "verify": "pnpm typecheck && pnpm lint && pnpm build && pnpm bundle && pnpm test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.2",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.10.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^5.0.1"
+  }
+}

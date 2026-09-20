@@ -1,0 +1,13 @@
+{
+  "name": "@merge-integrity/cli",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "merge-integrity": "./dist/main.js"
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@merge-integrity/core": "workspace:*"
+  }
+}
