@@ -87,7 +87,9 @@ jobs:
       - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
 ```
 
-Pin to an exact commit SHA for anything you enforce (see [docs/INSTALL.md](docs/INSTALL.md)).
+Pin to an exact commit SHA for anything you enforce:
+`muhammadmirza97/ai-test-integrity-review@9ec8249fd0d4dda327684766d5c1b3b828f09e3a`
+(see [docs/INSTALL.md](docs/INSTALL.md)).
 
 ### 3. Open a pull request and read the result
 

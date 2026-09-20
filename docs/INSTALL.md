@@ -107,10 +107,11 @@ jobs:
 
 ```yaml
       # v0.1.0-alpha.1
-      - uses: muhammadmirza97/ai-test-integrity-review@0000000000000000000000000000000000000000
+      - uses: muhammadmirza97/ai-test-integrity-review@9ec8249fd0d4dda327684766d5c1b3b828f09e3a
 ```
 
-(Replace the zeros with the 40-character commit SHA that the release points at — the release page shows it.)
+That SHA is the commit the `v0.1.0-alpha.1` release points at; every release page shows the commit it was
+built from.
 
 ### Try it without enforcing it
 
