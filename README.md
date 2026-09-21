@@ -14,7 +14,7 @@ did this pull request weaken its tests, and do its changed tests actually exerci
 
 No backend, no account, no telemetry, no LLM, no secrets. Your code never leaves the runner.
 
-**Status: alpha (`v0.1.0-alpha.1`).** Jest and Vitest, JavaScript/TypeScript, GitHub only. Expect rough edges,
+**Status: alpha (`v0.1.0-alpha.2`).** Jest and Vitest, JavaScript/TypeScript, GitHub only. Expect rough edges,
 and read [what this does not do](#what-this-does-not-do) before you rely on it. **Run it unenforced first** —
 this alpha exists to find out whether its findings are useful, not to police your merges.
 
@@ -44,7 +44,7 @@ Add `.github/workflows/merge-integrity-preflight.yml` (copy
 
 ```yaml
       - run: npm ci
-      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.2
         with:
           mode: doctor
 ```
@@ -84,11 +84,11 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.2
 ```
 
 Pin to an exact commit SHA for anything you enforce:
-`muhammadmirza97/ai-test-integrity-review@9ec8249fd0d4dda327684766d5c1b3b828f09e3a`
+`muhammadmirza97/ai-test-integrity-review@RELEASE_SHA`
 (see [docs/INSTALL.md](docs/INSTALL.md)).
 
 ### 3. Open a pull request and read the result

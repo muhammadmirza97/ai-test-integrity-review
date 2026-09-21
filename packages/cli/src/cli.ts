@@ -66,7 +66,7 @@ export async function runCli(argv: readonly string[], io: CliIo): Promise<number
 
   const { values, positionals } = parsed;
   if (values.version) {
-    io.stdout("merge-integrity 0.1.0-alpha.1\n");
+    io.stdout("merge-integrity 0.1.0-alpha.2\n");
     return 0;
   }
   const command = positionals[0];

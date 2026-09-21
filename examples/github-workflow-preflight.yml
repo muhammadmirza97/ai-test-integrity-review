@@ -27,6 +27,6 @@ jobs:
       # The preflight checks that the test runner is installed, so install dependencies first.
       - run: npm ci
 
-      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.2
         with:
           mode: doctor

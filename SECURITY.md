@@ -9,7 +9,7 @@ Please do not open a public issue for security problems. Report privately throug
 "Report a vulnerability" (private vulnerability reporting) on this repository. Include the affected version,
 a reproduction, and the impact. We aim to acknowledge reports within 5 business days.
 
-Status: pre-release alpha (`v0.1.0-alpha.1`). Only the latest commit on `main` is supported; there are no
+Status: pre-release alpha (`v0.1.0-alpha.2`). Only the latest commit on `main` is supported; there are no
 backported fixes.
 
 Related: [PRIVACY.md](PRIVACY.md) (what happens to your code), [SUPPORT.md](SUPPORT.md) (non-security issues,

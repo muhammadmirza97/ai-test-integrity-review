@@ -1,6 +1,6 @@
 # Installation and configuration
 
-Status: alpha (`v0.1.0-alpha.1`). Not published to npm or the GitHub Marketplace; install from the tag or a
+Status: alpha (`v0.1.0-alpha.2`). Not published to npm or the GitHub Marketplace; install from the tag or a
 pinned commit of this repository.
 
 > **A note on names.** The product and this repository are called **AI Test Integrity Review**. The CLI binary
@@ -33,7 +33,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.2
         with:
           mode: doctor
 ```
@@ -100,17 +100,17 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.2
 ```
 
 **Pin by commit SHA for anything you enforce.** A tag can be moved; a SHA cannot:
 
 ```yaml
-      # v0.1.0-alpha.1
-      - uses: muhammadmirza97/ai-test-integrity-review@9ec8249fd0d4dda327684766d5c1b3b828f09e3a
+      # v0.1.0-alpha.2
+      - uses: muhammadmirza97/ai-test-integrity-review@RELEASE_SHA
 ```
 
-That SHA is the commit the `v0.1.0-alpha.1` release points at; every release page shows the commit it was
+That SHA is the commit the `v0.1.0-alpha.2` release points at; every release page shows the commit it was
 built from.
 
 ### Try it without enforcing it

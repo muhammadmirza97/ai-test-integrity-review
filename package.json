@@ -1,7 +1,7 @@
 {
   "name": "ai-test-integrity-review",
   "private": true,
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Independent test-integrity review for AI-generated pull requests (Jest/Vitest, local-first).",
   "license": "Apache-2.0",
   "type": "module",

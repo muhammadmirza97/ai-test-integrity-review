@@ -138,7 +138,7 @@ If one in five runs ends in ERROR because of the repository's setup, the fix is 
 before anyone installs anything. So the compatibility preflight became a first-class feature:
 
 ```yaml
-- uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+- uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.2
   with:
     mode: doctor
 ```
@@ -210,7 +210,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.2
 ```
 
 Run the preflight first, leave it **unenforced** while you evaluate, and tell us what happened —

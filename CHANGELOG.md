@@ -3,7 +3,34 @@
 All notable changes to this project are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
-## [0.1.0-alpha.1] — unreleased (prepared)
+## [0.1.0-alpha.2] — 2026-09-21
+
+Distribution and feedback release. No change to what the check decides: the rules, the policy and the exit
+codes are identical to `v0.1.0-alpha.1`.
+
+### Added
+
+- **A quiet attribution line** at the end of the Step Summary and the preflight summary: one plain link to this
+  repository, after the result, with no advertising language, no tracking parameters and no telemetry. It is
+  there so a reviewer who sees a finding can tell what produced it.
+- **[Case study: 58 merged pull requests](docs/CASE_STUDY_58_PRS.md)** — the strict policy that produced seven
+  false BLOCKs, what changed because of it, and what the zero-BLOCK result does and does not prove.
+- **Project page**: https://muhammadmirza97.github.io/ai-test-integrity-review/ (one static file, no
+  analytics, no cookies, no tracking).
+- An **optional README badge** snippet. Nothing is ever added to a repository automatically.
+- `.github/workflows/triage.yml`: deterministic label routing for the issue forms — no LLM, no bot comments.
+
+### Changed
+
+- The alpha feedback form asks one neutral optional question about a future managed or team version, and what
+  would make it worth paying for. Nothing is for sale.
+- Repository description and topics rewritten around terms people actually search for.
+
+### Fixed
+
+- The Vitest fixture stays at 4.1.11 (GHSA-82fw-gwwq-j7x9); an export briefly reverted it to 4.1.10.
+
+## [0.1.0-alpha.1] — 2026-09-20
 
 First external alpha. **Nothing has been published**: no GitHub Release, no Marketplace listing, no npm package.
 
@@ -74,4 +101,5 @@ Plug'n'Play and Vitest browser mode are unsupported. Run the preflight first —
 - **D2 fixed**: BigInt values no longer crash canonicalisation.
 - 50-PR calibration (`CALIBRATION_RESULTS.md`) and end-to-end validation on real GitHub pull requests.
 
+[0.1.0-alpha.2]: https://github.com/muhammadmirza97/ai-test-integrity-review/releases/tag/v0.1.0-alpha.2
 [0.1.0-alpha.1]: https://github.com/muhammadmirza97/ai-test-integrity-review/releases/tag/v0.1.0-alpha.1
