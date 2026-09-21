@@ -88,7 +88,7 @@ jobs:
 ```
 
 Pin to an exact commit SHA for anything you enforce:
-`muhammadmirza97/ai-test-integrity-review@RELEASE_SHA`
+`muhammadmirza97/ai-test-integrity-review@b64598d9c60c636ce5ca50d9815c5c60726de74b`
 (see [docs/INSTALL.md](docs/INSTALL.md)).
 
 ### 3. Open a pull request and read the result

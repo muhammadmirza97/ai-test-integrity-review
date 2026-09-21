@@ -107,7 +107,7 @@ jobs:
 
 ```yaml
       # v0.1.0-alpha.2
-      - uses: muhammadmirza97/ai-test-integrity-review@RELEASE_SHA
+      - uses: muhammadmirza97/ai-test-integrity-review@b64598d9c60c636ce5ca50d9815c5c60726de74b
 ```
 
 That SHA is the commit the `v0.1.0-alpha.2` release points at; every release page shows the commit it was
