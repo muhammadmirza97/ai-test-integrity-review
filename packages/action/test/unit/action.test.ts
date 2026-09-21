@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { emptyMutation, emptyRedGreen, type AnalysisReport } from "@merge-integrity/core";
 import { parseInputs, resolveRefs } from "../../src/inputs.js";
-import { renderSummary } from "../../src/summary.js";
+import { ATTRIBUTION, renderSummary } from "../../src/summary.js";
 import { escapeData, escapeProperty, formatAnnotation, stopCommands, writeOutputs } from "../../src/workflow.js";
 
 const dirs: string[] = [];
@@ -216,5 +216,35 @@ describe("step summary", () => {
     expect(md).toContain("| WARN | `MI107_TEST_DISCOVERY_UNSUPPORTED` |");
     expect(md).not.toContain("PASS");
     expect(md).not.toMatch(/check failed/i);
+  });
+
+  describe("attribution footer", () => {
+    const report: AnalysisReport = {
+      schemaVersion: 1,
+      status: "pass",
+      findings: [],
+      ignoredFindings: [],
+      redGreen: emptyRedGreen("completed"),
+      mutation: emptyMutation("disabled"),
+      durationMs: 1234,
+      timings: {},
+      notes: [],
+    };
+
+    it("ends the summary with one plain, untracked link to the project", () => {
+      const md = renderSummary(report);
+      expect(md.trimEnd().endsWith(ATTRIBUTION)).toBe(true);
+      expect(md.split("github.com/muhammadmirza97/ai-test-integrity-review").length - 1).toBe(1);
+      expect(ATTRIBUTION).not.toMatch(/[?&](utm_|ref=|src=)/);
+      expect(ATTRIBUTION).not.toMatch(/free|best|try now|sign up|★|⭐/i);
+    });
+
+    it("does not change the decision, the counts or the findings table", () => {
+      const md = renderSummary(report);
+      expect(md).toContain("## Merge Integrity: PASS");
+      expect(md).toContain("0 blockers · 0 warnings");
+      expect(md.indexOf("## Merge Integrity: PASS")).toBeLessThan(md.indexOf(ATTRIBUTION));
+      expect(md).not.toMatch(/<img|<script/);
+    });
   });
 });

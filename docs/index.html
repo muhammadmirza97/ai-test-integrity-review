@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Test Integrity Review — did this AI-written PR weaken its tests?</title>
+    <meta
+      name="description"
+      content="Open-source GitHub Action that reviews test integrity in AI-assisted pull requests: high-confidence test-tampering detection, independent red/green evidence for changed regression tests, and advisory review for everything uncertain. Jest and Vitest. No backend, no telemetry."
+    />
+    <link rel="canonical" href="https://muhammadmirza97.github.io/ai-test-integrity-review/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Test Integrity Review" />
+    <meta
+      property="og:description"
+      content="A GitHub Action that checks whether a pull request weakened its tests — and runs each changed test against the old code to prove a regression test actually fails there."
+    />
+    <meta property="og:url" content="https://muhammadmirza97.github.io/ai-test-integrity-review/" />
+    <meta name="twitter:card" content="summary" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #ffffff;
+        --fg: #1f2328;
+        --muted: #59636e;
+        --line: #d1d9e0;
+        --accent: #0969da;
+        --code-bg: #f6f8fa;
+        --ok: #1a7f37;
+        --warn: #9a6700;
+        --block: #cf222e;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0d1117;
+          --fg: #e6edf3;
+          --muted: #9198a1;
+          --line: #30363d;
+          --accent: #4493f8;
+          --code-bg: #161b22;
+          --ok: #3fb950;
+          --warn: #d29922;
+          --block: #f85149;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      }
+      main { max-width: 760px; margin: 0 auto; padding: 3rem 16px 4rem; }
+      h1 { font-size: 2rem; line-height: 1.25; margin: 0 0 .5rem; letter-spacing: -0.02em; }
+      h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+      h3 { font-size: 1rem; margin: 1.5rem 0 .5rem; }
+      p, li { color: var(--fg); }
+      .lede { font-size: 1.1rem; color: var(--muted); margin: 0 0 1.5rem; }
+      a { color: var(--accent); }
+      code, pre { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; font-size: .875rem; }
+      pre {
+        background: var(--code-bg);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: .85rem 1rem;
+        overflow-x: auto;
+      }
+      code { background: var(--code-bg); padding: .1rem .3rem; border-radius: 4px; }
+      pre code { background: none; padding: 0; }
+      table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .925rem; }
+      th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+      th { color: var(--muted); font-weight: 600; }
+      .badges { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.5rem; }
+      .badge {
+        font-size: .8rem; color: var(--muted); border: 1px solid var(--line);
+        border-radius: 999px; padding: .15rem .6rem;
+      }
+      .cta { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.5rem 0; }
+      .cta a {
+        display: inline-block; padding: .55rem 1rem; border-radius: 6px; text-decoration: none;
+        border: 1px solid var(--line); color: var(--fg); font-weight: 600; font-size: .925rem;
+      }
+      .cta a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+      .pass { color: var(--ok); font-weight: 600; }
+      .warn { color: var(--warn); font-weight: 600; }
+      .block { color: var(--block); font-weight: 600; }
+      .note { color: var(--muted); font-size: .925rem; }
+      footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .875rem; }
+      ul { padding-left: 1.2rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Did this AI-written pull request weaken its tests?</h1>
+      <p class="lede">
+        An agent that cannot make a failing test pass can always make the test stop asking. CI stays green
+        either way. <strong>AI Test Integrity Review</strong> is an open-source GitHub Action that tries to tell
+        those two cases apart — and shows its evidence.
+      </p>
+
+      <div class="badges">
+        <span class="badge">Apache-2.0</span>
+        <span class="badge">Jest 29–30 · Vitest 4–5</span>
+        <span class="badge">No backend · no telemetry</span>
+        <span class="badge">v0.1.0-alpha.1 · alpha</span>
+      </div>
+
+      <div class="cta">
+        <a class="primary" href="https://github.com/muhammadmirza97/ai-test-integrity-review">Repository</a>
+        <a href="https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/docs/INSTALL.md">Install</a>
+        <a href="https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/docs/CASE_STUDY_58_PRS.md">Case study: 58 merged PRs</a>
+        <a href="https://github.com/muhammadmirza97/ai-test-integrity-review/issues/new/choose">Give feedback</a>
+      </div>
+
+      <h2>What it does</h2>
+      <ul>
+        <li>
+          <strong>Catches high-confidence test tampering</strong> — a test gains <code>.skip</code> or
+          <code>.only</code>, an assertion is weakened in a reviewed transformation, the test command is
+          bypassed, or the check itself is weakened. Only these fail the build.
+        </li>
+        <li>
+          <strong>Independent red/green evidence.</strong> Each changed test is run against the
+          <em>previous</em> implementation in a fresh isolated worktree: a real regression test has to fail
+          there with a genuine assertion failure and pass on the new code.
+        </li>
+        <li>
+          <strong>Advisory review for everything uncertain</strong> — removed assertions, tests that do not
+          discriminate, tests it could not verify, unreadable test discovery. Reported for a human, never a
+          build failure by default.
+        </li>
+        <li><strong>Optional targeted mutation testing</strong> on the lines the pull request changed.</li>
+      </ul>
+      <p class="note">
+        Your code never leaves the runner: no network calls from the analyser, no LLM, no account, no secrets
+        required, nothing collected.
+      </p>
+
+      <h2>Install in three steps</h2>
+      <h3>1. Check compatibility first (about a minute, never fails the job)</h3>
+      <pre><code>name: Test Integrity preflight
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with: { fetch-depth: 0, persist-credentials: false }
+      - uses: actions/setup-node@v5
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1
+        with:
+          mode: doctor</code></pre>
+      <p class="note">
+        It answers SUPPORTED / SUPPORTED WITH WARNINGS / UNSUPPORTED and explains every finding, without
+        running your tests.
+      </p>
+
+      <h3>2. Add the check to pull requests</h3>
+      <pre><code>name: Test Integrity
+on: pull_request
+permissions:
+  contents: read
+jobs:
+  test-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with: { fetch-depth: 0, persist-credentials: false }
+      - uses: actions/setup-node@v5
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - uses: muhammadmirza97/ai-test-integrity-review@v0.1.0-alpha.1</code></pre>
+
+      <h3>3. Leave it unenforced while you evaluate</h3>
+      <p>
+        Do not make it a required status check yet. This is an alpha; the point is to find out whether its
+        findings are useful, not to police merges. Pin by commit SHA for anything you do enforce.
+      </p>
+
+      <h2>Reading the result</h2>
+      <table>
+        <tr><th>Result</th><th>Meaning</th><th>Job</th></tr>
+        <tr><td class="pass">PASS</td><td>No blocking integrity finding.</td><td>success</td></tr>
+        <tr><td class="warn">WARN</td><td>Advisory evidence worth a look; does not fail the check.</td><td>success</td></tr>
+        <tr><td class="block">BLOCK</td><td>High-confidence integrity issue.</td><td>failure</td></tr>
+        <tr>
+          <td class="block">ERROR</td>
+          <td>The analysis could not safely complete. <strong>Not</strong> a claim that the pull request is safe.</td>
+          <td>failure</td>
+        </tr>
+      </table>
+
+      <h2>Evidence, including the part that went badly</h2>
+      <p>
+        The first version was a strict fail-closed gate. Run against 58 merged pull requests from 15 public
+        repositories, it turned <strong>31 of them red</strong> and produced <strong>7 BLOCKs — all false</strong>.
+        That result changed the product rather than the thresholds: blocking is now limited to five
+        high-confidence rules, everything uncertain became advisory, and two defects were fixed.
+      </p>
+      <table>
+        <tr><th>On the same 58 merged PRs</th><th>Strict policy</th><th>Today</th></tr>
+        <tr><td>Blocking findings</td><td>7 (all false)</td><td><strong>0</strong></td></tr>
+        <tr><td>Required check red</td><td>31 (53%)</td><td>11 (19%)</td></tr>
+        <tr><td>Remaining red checks</td><td>—</td><td>all ERROR from unsupported setups</td></tr>
+      </table>
+      <p class="note">
+        Zero blocking findings on 58 pull requests bounds the false-positive rate (95% upper bound ≈ 5%); it
+        does not prove there are none. It says nothing about <em>recall</em>: the corpus contained no known
+        tampering, so how much real test-gaming this catches is unmeasured. That is why it is an alpha.
+        <a href="https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/docs/CASE_STUDY_58_PRS.md">Read the full story</a>.
+      </p>
+
+      <h2>Supported stack</h2>
+      <ul>
+        <li>JavaScript / TypeScript, <strong>Jest 29–30</strong> or <strong>Vitest 4–5</strong></li>
+        <li>GitHub Actions, <code>pull_request</code> and <code>merge_group</code>, Node 22.18+ / 24.11+</li>
+        <li>npm, pnpm, Yarn with <code>node-modules</code></li>
+        <li>One project directory per run; optional mutation testing with Stryker 10</li>
+      </ul>
+
+      <h2>Known limits</h2>
+      <ul>
+        <li>It does <strong>not</strong> prove a pull request correct, safe or ready to merge.</li>
+        <li>It does <strong>not</strong> detect whether code was written by an AI, and does not try to.</li>
+        <li>Real-world recall of the blocking rules is <strong>unmeasured</strong>.</li>
+        <li>
+          Not supported: Yarn Plug'n'Play, Vitest browser mode, a Jest/Vitest config reachable only through the
+          <code>test</code> script, multi-project runs, non-GitHub CI.
+          <a href="https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/docs/ALPHA_SUPPORT_MATRIX.md">Support matrix</a>.
+        </li>
+        <li>Enforcement as a required status check has not been proven end to end yet.</li>
+      </ul>
+
+      <h2>Tell us what happened</h2>
+      <p>
+        The alpha exists to collect evidence from real repositories doing AI-assisted development. The issue
+        forms take a few minutes and none of them need your source code — a finding you believe is wrong is the
+        most valuable report of all.
+      </p>
+      <div class="cta">
+        <a class="primary" href="https://github.com/muhammadmirza97/ai-test-integrity-review/issues/new/choose">Open an issue</a>
+        <a href="https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/SUPPORT.md">Support</a>
+        <a href="https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/SECURITY.md">Security</a>
+        <a href="https://github.com/muhammadmirza97/ai-test-integrity-review/blob/main/PRIVACY.md">Privacy</a>
+      </div>
+
+      <footer>
+        Apache-2.0 · alpha (<code>v0.1.0-alpha.1</code>) · no analytics, no cookies, no tracking on this page ·
+        <a href="https://github.com/muhammadmirza97/ai-test-integrity-review">github.com/muhammadmirza97/ai-test-integrity-review</a>
+      </footer>
+    </main>
+  </body>
+</html>

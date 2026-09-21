@@ -147,16 +147,21 @@ body:
   - type: dropdown
     id: willingness-to-pay
     attributes:
-      label: "Optional: if this were a paid tool for private repositories, what would be reasonable?"
-      description: Neutral question for planning only. Nothing is for sale, and your answer changes nothing about your access.
+      label: "Optional: if this reliably protected your private repositories from AI-related test-integrity problems, would you pay for a managed or team version?"
+      description: Asked for planning only. Nothing is for sale, no price has been set, and your answer changes nothing about your access to this alpha.
       options:
         - "Prefer not to answer"
-        - "Only if it stays free"
-        - "I would pay something, but I do not know how much"
-        - "Up to about $10 per month"
-        - "About $10-30 per month"
-        - "More than $30 per month"
-        - "Only my employer would pay for something like this"
+        - "Yes"
+        - "Maybe"
+        - "No"
+    validations:
+      required: false
+
+  - type: textarea
+    id: willingness-to-pay-why
+    attributes:
+      label: "If you answered yes or maybe: what would make it worth paying for?"
+      description: Skip this if you would rather not say.
     validations:
       required: false
 

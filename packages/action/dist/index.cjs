@@ -27876,7 +27876,16 @@ function renderDoctorSummary(report2) {
     const detail = markdownText(check.message, 400) + (check.remedy !== void 0 && check.level !== "ok" ? `<br>**What to do:** ${markdownText(check.remedy, 400)}` : "");
     out.push(`| ${icon[check.level]} | ${markdownText(check.id, 60)} | ${detail} |`);
   }
-  out.push("", "This preflight never fails the job. See `docs/ALPHA_SUPPORT_MATRIX.md`.", "");
+  out.push(
+    "",
+    "This preflight never fails the job. See `docs/ALPHA_SUPPORT_MATRIX.md`.",
+    "",
+    "---",
+    "",
+    // Same quiet attribution as the check's own summary: a plain link, no tracking, printed once.
+    "[AI Test Integrity Review](https://github.com/muhammadmirza97/ai-test-integrity-review) \xB7 alpha",
+    ""
+  );
   return out.join("\n");
 }
 
@@ -27987,6 +27996,7 @@ function resolveRefs(env, inputs) {
 
 // packages/action/src/summary.ts
 var MAX_FINDINGS = 50;
+var ATTRIBUTION = "[AI Test Integrity Review](https://github.com/muhammadmirza97/ai-test-integrity-review) \xB7 alpha";
 function where(finding) {
   if (finding.file === void 0) return "";
   return markdownText(finding.startLine === void 0 ? finding.file : `${finding.file}:${finding.startLine}`, 300);
@@ -28022,7 +28032,7 @@ function renderSummary(report2) {
     }
   }
   for (const note of report2.notes) lines.push(`- ${markdownText(note, 300)}`);
-  lines.push(`- **Duration:** ${(report2.durationMs / 1e3).toFixed(1)}s`, "");
+  lines.push(`- **Duration:** ${(report2.durationMs / 1e3).toFixed(1)}s`, "", "---", "", ATTRIBUTION, "");
   return `${lines.join("\n")}
 `;
 }

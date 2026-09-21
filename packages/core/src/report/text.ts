@@ -130,6 +130,15 @@ export function renderDoctorSummary(report: DoctorReport): string {
     const detail = markdownText(check.message, 400) + (check.remedy !== undefined && check.level !== "ok" ? `<br>**What to do:** ${markdownText(check.remedy, 400)}` : "");
     out.push(`| ${icon[check.level]} | ${markdownText(check.id, 60)} | ${detail} |`);
   }
-  out.push("", "This preflight never fails the job. See `docs/ALPHA_SUPPORT_MATRIX.md`.", "");
+  out.push(
+    "",
+    "This preflight never fails the job. See `docs/ALPHA_SUPPORT_MATRIX.md`.",
+    "",
+    "---",
+    "",
+    // Same quiet attribution as the check's own summary: a plain link, no tracking, printed once.
+    "[AI Test Integrity Review](https://github.com/muhammadmirza97/ai-test-integrity-review) · alpha",
+    "",
+  );
   return out.join("\n");
 }

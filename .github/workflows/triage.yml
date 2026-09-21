@@ -1,0 +1,38 @@
+# Deterministic issue triage. No LLM, no content writes, no bot comments: it only adds labels that are
+# derived from the issue form the reporter chose, so the highest-priority reports are visible at a glance.
+name: Triage
+
+on:
+  issues:
+    types: [opened, labeled, reopened]
+
+permissions:
+  issues: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Add a priority label based on the issue form
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          LABELS: ${{ join(github.event.issue.labels.*.name, ',') }}
+        run: |
+          set -euo pipefail
+          case ",$LABELS," in
+            # A finding the reporter believes is wrong is the most serious defect class for this product.
+            *,incorrect-finding,*) add="priority: immediate" ;;
+            # A repository that cannot install or run is the second: it decides whether the support matrix is honest.
+            *,compatibility,*)     add="needs: triage" ;;
+            *,useful-finding,*)    add="evidence: useful finding" ;;
+            *,feedback,*)          add="needs: triage" ;;
+            *)                     echo "no form label; nothing to add"; exit 0 ;;
+          esac
+          if printf '%s' ",$LABELS," | grep -qF ",$add,"; then
+            echo "already labelled '$add'"
+            exit 0
+          fi
+          gh issue edit "$NUMBER" --repo "$REPO" --add-label "$add"

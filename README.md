@@ -101,7 +101,17 @@ The job prints the result, writes a Step Summary, and annotates the changed line
 [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) is organised by symptom. If a BLOCK is wrong, please report
 it — see [SUPPORT.md](SUPPORT.md). A false BLOCK is the most serious defect this product can have.
 
-### 5. Turning it off
+### 5. Optional: show the check in your README
+
+Entirely your choice — nothing is added to your repository automatically:
+
+```markdown
+[![Test integrity](https://img.shields.io/badge/test%20integrity-reviewed-0969da)](https://github.com/muhammadmirza97/ai-test-integrity-review)
+```
+
+It is a static shields.io badge that links here; it reports no status and sends us nothing.
+
+### 6. Turning it off
 
 Remove the check from your required status checks, or delete the workflow file. There is nothing else installed
 and no data anywhere to delete ([PRIVACY.md](PRIVACY.md)).
@@ -149,6 +159,7 @@ PR diff
   which is what the preflight now detects up front.
 - Detection evidence comes from rule fixtures and 18/18 synthetic tampering scenarios. **Real-world recall is
   unmeasured**: the calibration corpus contained no known tampering.
+- The full story, including the version that failed: [case study — 58 merged pull requests](docs/CASE_STUDY_58_PRS.md).
 - Verified end to end on real GitHub pull requests (clean PR → PASS, `it.skip` → BLOCK, weakening input →
   ERROR). Enforcement as a *required* status check that actually prevents a merge has **not** been proven yet.
 
@@ -159,6 +170,7 @@ PR diff
 - [Rules](docs/RULES.md) · [Red/green verification](docs/RED_GREEN.md)
 - [Security policy](SECURITY.md) · [Threat model](docs/THREAT_MODEL.md) · [Privacy](PRIVACY.md) ·
   [Licence](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
+- [Case study: 58 merged pull requests](docs/CASE_STUDY_58_PRS.md) · [Project page](https://muhammadmirza97.github.io/ai-test-integrity-review/)
 - [Changelog](CHANGELOG.md) · [Architecture](docs/ARCHITECTURE.md) · [Test strategy](docs/TEST_STRATEGY.md) ·
   [Security guardrails](docs/SECURITY_GUARDRAILS.md)
 - Evidence: [calibration results](CALIBRATION_RESULTS.md) · [policy recalibration](POLICY_RECALIBRATION.md)

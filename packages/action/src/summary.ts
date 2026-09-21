@@ -2,6 +2,13 @@ import { markdownText, mutationLine, redGreenLine, type AnalysisReport, type Fin
 
 const MAX_FINDINGS = 50;
 
+/**
+ * One quiet attribution line at the end of the Step Summary, so a reviewer who sees a finding can find out
+ * what produced it. No advertising language, no tracking parameters, no telemetry: a plain repository link,
+ * printed once per run, after the result.
+ */
+export const ATTRIBUTION = "[AI Test Integrity Review](https://github.com/muhammadmirza97/ai-test-integrity-review) · alpha";
+
 function where(finding: Finding): string {
   if (finding.file === undefined) return "";
   return markdownText(finding.startLine === undefined ? finding.file : `${finding.file}:${finding.startLine}`, 300);
@@ -39,6 +46,6 @@ export function renderSummary(report: AnalysisReport): string {
     }
   }
   for (const note of report.notes) lines.push(`- ${markdownText(note, 300)}`);
-  lines.push(`- **Duration:** ${(report.durationMs / 1000).toFixed(1)}s`, "");
+  lines.push(`- **Duration:** ${(report.durationMs / 1000).toFixed(1)}s`, "", "---", "", ATTRIBUTION, "");
   return `${lines.join("\n")}\n`;
 }
