@@ -33,6 +33,35 @@ body:
       required: false
 
   - type: input
+    id: agent
+    attributes:
+      label: Which AI coding agent(s) do you use on this repository?
+      placeholder: "Claude Code, Codex, Cursor, Copilot, none..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: install-difficulty
+    attributes:
+      label: How hard was it to install?
+      options:
+        - "Copy-paste, worked first time"
+        - "Minor fiddling (a few minutes)"
+        - "Took real effort (I had to debug it)"
+        - "I could not get it working"
+        - "I did not install it"
+    validations:
+      required: false
+
+  - type: input
+    id: repos
+    attributes:
+      label: How many repositories did you try it on?
+      placeholder: "1"
+    validations:
+      required: false
+
+  - type: input
     id: prs
     attributes:
       label: Roughly how many pull requests has it run on?
@@ -49,6 +78,26 @@ body:
     validations:
       required: false
 
+  - type: input
+    id: runtime
+    attributes:
+      label: Roughly how much time did the check add to a pull request?
+      placeholder: "about 30 seconds"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: support
+    attributes:
+      label: Did you need help to get it working or to understand a result?
+      options:
+        - "No, the docs were enough"
+        - "Once"
+        - "Two or three times"
+        - "More than that"
+    validations:
+      required: false
+
   - type: dropdown
     id: keep
     attributes:
@@ -61,6 +110,18 @@ body:
         - "Undecided"
     validations:
       required: true
+
+  - type: dropdown
+    id: recommend
+    attributes:
+      label: Would you recommend a colleague keep it enabled?
+      options:
+        - "Yes"
+        - "Yes, advisory only"
+        - "Not yet"
+        - "No"
+    validations:
+      required: false
 
   - type: textarea
     id: annoyance
