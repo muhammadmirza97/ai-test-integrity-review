@@ -15,7 +15,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/parser": "^8.0.5",
+    "@babel/parser": "^8.0.6",
     "picomatch": "^4.0.7",
     "yaml": "^2.9.1"
   },
