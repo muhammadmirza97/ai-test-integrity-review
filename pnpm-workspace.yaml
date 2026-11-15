@@ -4,3 +4,7 @@ packages:
 # esbuild ships its platform binary through optional dependencies and works without its postinstall.
 allowBuilds:
   esbuild: false
+# Patched transitive dependencies of the root Vitest toolchain.
+overrides:
+  "vite@>=8.3.0 <=8.3.2": "8.3.3"
+  "source-map-js@<1.2.2": "1.2.2"
